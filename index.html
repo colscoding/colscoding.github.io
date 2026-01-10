@@ -52,8 +52,8 @@
         })();
     </script>
 
-  <script type="module" crossorigin src="/assets/index-Bdq_nS1h.js"></script>
-  <link rel="stylesheet" crossorigin href="/assets/index-Xv8SEKL9.css">
+  <script type="module" crossorigin src="/assets/index-BkZu0W9F.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-C-5HGYCO.css">
 <link rel="manifest" href="/manifest.webmanifest"><script id="vite-plugin-pwa:register-sw" src="/registerSW.js"></script></head>
 
 <body>
@@ -124,10 +124,12 @@
             <details>
                 <summary aria-label="Open menu" aria-expanded="false" tabindex="0">☰</summary>
                 <div id="controls" role="menu">
-                    <button id="connectPower" role="menuitem" aria-label="Connect power meter">⚡ Connect Power</button>
-                    <button id="connectCadence" role="menuitem" aria-label="Connect cadence sensor">🚴 Connect
-                        Cadence</button>
-                    <button id="connectHeartrate" role="menuitem" aria-label="Connect heart rate monitor">❤️ Connect
+                    <button id="connectPower" class="menu-btn" role="menuitem" aria-label="Connect power meter"
+                        data-testid="connect-power">⚡ Connect Power</button>
+                    <button id="connectCadence" class="menu-btn" role="menuitem" aria-label="Connect cadence sensor"
+                        data-testid="connect-cadence">🚴 Connect Cadence</button>
+                    <button id="connectHeartrate" class="menu-btn" role="menuitem"
+                        aria-label="Connect heart rate monitor" data-testid="connect-heartrate">❤️ Connect
                         Heartrate</button>
                     <button id="connectTreadmill" role="menuitem" aria-label="Connect Treadmill">🏃 Connect
                         Treadmill</button>
@@ -135,9 +137,9 @@
                     <button id="exportData" role="menuitem" aria-label="Export workout data">💾 Export Data</button>
                     <button id="discardButton" role="menuitem" aria-label="Discard workout data">🗑️ Discard
                         Data</button>
-                    <!-- Replaced by Nav Bar
-                    <button id="workoutsButton" role="menuitem" aria-label="Structured Workouts">🏋️ Workouts</button>
-                    -->
+                    <button id="workoutsButton" role="menuitem" aria-label="Structured Workouts">🏋️ Structured
+                        Workouts</button>
+                    <button id="plansButton" role="menuitem" aria-label="Training Plans">📅 Training Plans</button>
                     <!-- Replaced by Nav Bar
                     <button id="workoutHistoryButton" role="menuitem" aria-label="View workout history">📊 Workout
                         History</button>
@@ -178,6 +180,7 @@
     </header>
     <main role="main">
         <div id="mainContent">
+            <div id="page-workouts" class="page-view" style="display:none"></div>
             <div id="page-dashboard" class="page-view">
                 <div id="yourMetrics" class="metrics-section" aria-label="Your workout metrics">
                     <div id="yourMetricsToolbar" class="section-header">
@@ -187,56 +190,34 @@
                                 aria-label="Workout controls">
 
                                 <button id="startButton" class="workout-btn workout-btn-start"
-                                    aria-label="Start workout">▶️</button>
+                                    aria-label="Start workout" data-testid="start-workout">▶️</button>
                                 <button id="pauseButton" class="workout-btn workout-btn-pause"
-                                    aria-label="Pause workout" style="display: none;">⏸️</button>
+                                    aria-label="Pause workout" style="display: none;"
+                                    data-testid="pause-workout">⏸️</button>
                                 <button id="resumeButton" class="workout-btn workout-btn-resume"
-                                    aria-label="Resume workout" style="display: none;">▶️</button>
+                                    aria-label="Resume workout" style="display: none;"
+                                    data-testid="resume-workout">▶️</button>
                                 <button id="lapButton" class="workout-btn workout-btn-lap" aria-label="Mark lap"
                                     style="display: none;" title="Mark Lap (L)">🏁</button>
                                 <button id="stopButton" class="workout-btn workout-btn-stop"
-                                    aria-label="Stop and save workout" style="display: none;">⏹️</button>
+                                    aria-label="Stop and save workout" style="display: none;"
+                                    data-testid="stop-workout">⏹️</button>
+                                <button id="toggleMapBtn" class="workout-btn workout-btn-map"
+                                    aria-label="Toggle Map View" style="display: none;">🗺️</button>
                             </div>
                         </div>
                         <div id="lapCounter" class="lap-counter" style="display: none;" aria-live="polite">
                             <span id="lapCountLabel">Laps: </span><span id="lapCount">0</span>
                         </div>
                     </div>
-                    <dl id="metricsTable" aria-label="Live workout metrics">
-                        <div class="metric-group metric-group-power">
-                            <dt id="powerLabel">Power</dt>
-                            <dd id="power" aria-labelledby="powerLabel" aria-live="polite"></dd>
-                        </div>
-                        <div class="metric-group metric-group-cadence">
-                            <dt id="cadenceLabel">Cadence</dt>
-                            <dd id="cadence" aria-labelledby="cadenceLabel" aria-live="polite"></dd>
-                        </div>
-                        <div class="metric-group metric-group-heartrate">
-                            <dt id="heartrateLabel">Heart Rate</dt>
-                            <dd id="heartrate" aria-labelledby="heartrateLabel" aria-live="polite"></dd>
-                        </div>
-                        <div class="metric-group metric-group-speed">
-                            <dt id="speedLabel">Speed</dt>
-                            <dd id="speed" aria-labelledby="speedLabel" aria-live="polite"></dd>
-                        </div>
-                        <div class="metric-group metric-group-distance">
-                            <dt id="distanceLabel">Distance</dt>
-                            <dd id="distance" aria-labelledby="distanceLabel" aria-live="polite"></dd>
-                        </div>
-                        <div class="metric-group metric-group-altitude">
-                            <dt id="altitudeLabel">Altitude</dt>
-                            <dd id="altitude" aria-labelledby="altitudeLabel" aria-live="polite"></dd>
-                        </div>
-                        <div class="metric-group metric-group-treadmillSpeed" style="display: none;">
-                            <dt id="treadmillSpeedLabel">Treadmill Speed</dt>
-                            <dd id="treadmillSpeed" aria-labelledby="treadmillSpeedLabel" aria-live="polite"></dd>
-                        </div>
-                        <div class="metric-group metric-group-incline" style="display: none;">
-                            <dt id="inclineLabel">Incline</dt>
-                            <dd id="value-incline" aria-labelledby="inclineLabel" aria-live="polite">--</dd>
-                        </div>
-                    </dl>
+
+                    <!-- GPS Map Container -->
+                    <div id="gpsMap" style="display: none; height: 350px; width: 100%;"></div>
+
+                    <!-- Data Fields Carousel - Customizable Data Display -->
+                    <bpt-screen-carousel id="dataFieldsCarousel"></bpt-screen-carousel>
                 </div>
+
                 <div id="streamMetrics" class="metrics-section" aria-label="Stream metrics" style="display: none;">
                     <div class="section-header">
                         <div class="stream-title-with-status">
@@ -303,6 +284,7 @@
 
             <div id="page-history" class="page-view" style="display: none;"></div>
             <div id="page-workouts" class="page-view" style="display: none;"></div>
+            <div id="page-plans" class="page-view" style="display: none;"></div>
             <div id="page-settings" class="page-view" style="display: none;"></div>
         </div>
     </main>
@@ -346,6 +328,62 @@
                 </div>
             </fieldset>
 
+            <!-- Sport Type Settings Section -->
+            <fieldset class="settings-fieldset"
+                style="border: 1px solid #d0d7de; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+                <legend style="font-weight: 600; padding: 0 8px;">🏅 Activity Type</legend>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="display: flex; flex-direction: column; gap: 4px;">
+                        <label for="settingSportType" style="font-size: 16px;">Sport Type</label>
+                        <select id="settingSportType"
+                            style="padding: 10px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; background: white;">
+                            <option value="cycling">🚴 Cycling</option>
+                            <option value="running">🏃 Running</option>
+                            <option value="walking">🚶 Walking</option>
+                        </select>
+                        <p style="font-size: 12px; color: #666; margin: 4px 0 0 0;">
+                            Changes metrics display and export format
+                        </p>
+                    </div>
+                    <div id="runningOptions" style="display: none; padding-top: 12px; border-top: 1px solid #d0d7de;">
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <label class="settings-option"
+                                style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                                <input type="checkbox" id="settingShowPace" checked style="width: 20px; height: 20px;">
+                                <div>
+                                    <span style="font-size: 16px;">Show Pace (min/km)</span>
+                                    <p style="font-size: 12px; color: #666; margin: 2px 0 0 0;">
+                                        Display pace instead of speed for running
+                                    </p>
+                                </div>
+                            </label>
+                            <div style="display: flex; flex-direction: column; gap: 4px;">
+                                <label for="settingThresholdPace" style="font-size: 16px;">Threshold Pace</label>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <input type="text" id="settingThresholdPace" placeholder="5:00"
+                                        pattern="[0-9]{1,2}:[0-5][0-9]"
+                                        style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; flex: 1; font-size: 16px;">
+                                    <span style="font-size: 14px; color: #666;">min/km</span>
+                                </div>
+                                <p style="font-size: 12px; color: #666; margin: 4px 0 0 0;">
+                                    Your lactate threshold pace for zone calculations
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Data Screens Settings Section -->
+            <fieldset class="settings-fieldset"
+                style="border: 1px solid #d0d7de; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+                <legend style="font-weight: 600; padding: 0 8px;">📱 Data Screens</legend>
+                <p style="margin-bottom: 12px; color: #666; font-size: 14px;">
+                    Configure the screens shown during your workout. Swipe or tap dots to switch between screens.
+                </p>
+                <bpt-profile-settings id="profileSettings"></bpt-profile-settings>
+            </fieldset>
+
             <!-- Display Settings Section -->
             <fieldset class="settings-fieldset"
                 style="border: 1px solid #d0d7de; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
@@ -381,6 +419,11 @@
                         style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
                         <input type="checkbox" id="settingAltitude" checked style="width: 20px; height: 20px;">
                         <span style="font-size: 16px;">🏔️ Altitude</span>
+                    </label>
+                    <label class="settings-option"
+                        style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                        <input type="checkbox" id="settingShowCalories" style="width: 20px; height: 20px;">
+                        <span style="font-size: 16px;">🔥 Calories (kcal)</span>
                     </label>
                     <label class="settings-option"
                         style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
@@ -453,6 +496,242 @@
                             <span style="font-size: 14px;">Announce Zone Changes</span>
                         </label>
                     </div>
+
+                    <!-- Enhanced Voice Announcements -->
+                    <div style="margin-top: 12px; padding-top: 12px; border-top: 1px solid #e1e4e8;">
+                        <h4 style="font-size: 14px; font-weight: 600; margin: 0 0 12px 0;">📢 Interval Announcements
+                        </h4>
+
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <!-- Time Interval -->
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <label for="settingVoiceTimeInterval"
+                                    style="font-size: 14px; min-width: 100px;">Every:</label>
+                                <select id="settingVoiceTimeInterval"
+                                    style="padding: 6px 10px; border-radius: 4px; border: 1px solid #d0d7de; font-size: 14px;">
+                                    <option value="0">Disabled</option>
+                                    <option value="1">1 minute</option>
+                                    <option value="5">5 minutes</option>
+                                    <option value="10">10 minutes</option>
+                                    <option value="15">15 minutes</option>
+                                    <option value="30">30 minutes</option>
+                                </select>
+                            </div>
+
+                            <!-- Distance Interval -->
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <label for="settingVoiceDistanceInterval"
+                                    style="font-size: 14px; min-width: 100px;">Every:</label>
+                                <select id="settingVoiceDistanceInterval"
+                                    style="padding: 6px 10px; border-radius: 4px; border: 1px solid #d0d7de; font-size: 14px;">
+                                    <option value="0">Disabled</option>
+                                    <option value="1">1 km</option>
+                                    <option value="5">5 km</option>
+                                    <option value="10">10 km</option>
+                                </select>
+                            </div>
+
+                            <!-- Speech Rate -->
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <label for="settingVoiceSpeechRate"
+                                    style="font-size: 14px; min-width: 100px;">Speed:</label>
+                                <select id="settingVoiceSpeechRate"
+                                    style="padding: 6px 10px; border-radius: 4px; border: 1px solid #d0d7de; font-size: 14px;">
+                                    <option value="0.5">Slow</option>
+                                    <option value="0.75">Slower</option>
+                                    <option value="1" selected>Normal</option>
+                                    <option value="1.25">Faster</option>
+                                    <option value="1.5">Fast</option>
+                                    <option value="2">Very Fast</option>
+                                </select>
+                            </div>
+
+                            <!-- Metrics to announce -->
+                            <div style="margin-top: 8px;">
+                                <p style="font-size: 13px; font-weight: 500; margin: 0 0 8px 0;">Announce these metrics:
+                                </p>
+                                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                                    <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                        <input type="checkbox" id="settingVoiceMetricPower" checked
+                                            style="width: 16px; height: 16px;">
+                                        <span style="font-size: 13px;">Power</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                        <input type="checkbox" id="settingVoiceMetricHeartrate" checked
+                                            style="width: 16px; height: 16px;">
+                                        <span style="font-size: 13px;">Heart Rate</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                        <input type="checkbox" id="settingVoiceMetricSpeed" checked
+                                            style="width: 16px; height: 16px;">
+                                        <span style="font-size: 13px;">Speed</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                        <input type="checkbox" id="settingVoiceMetricCadence"
+                                            style="width: 16px; height: 16px;">
+                                        <span style="font-size: 13px;">Cadence</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                        <input type="checkbox" id="settingVoiceMetricDistance" checked
+                                            style="width: 16px; height: 16px;">
+                                        <span style="font-size: 13px;">Distance</span>
+                                    </label>
+                                    <label style="display: flex; align-items: center; gap: 6px; cursor: pointer;">
+                                        <input type="checkbox" id="settingVoiceMetricTime" checked
+                                            style="width: 16px; height: 16px;">
+                                        <span style="font-size: 13px;">Time</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Auto-Lap Settings Section -->
+            <fieldset class="settings-fieldset"
+                style="border: 1px solid #d0d7de; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+                <legend style="font-weight: 600; padding: 0 8px;">🏁 Auto-Lap</legend>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <label class="settings-option"
+                        style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                        <input type="checkbox" id="settingAutoLapEnabled" style="width: 20px; height: 20px;">
+                        <div>
+                            <span style="font-size: 16px;">Enable Auto-Lap</span>
+                            <p style="font-size: 12px; color: #666; margin: 2px 0 0 0;">Automatically mark laps at
+                                intervals</p>
+                        </div>
+                    </label>
+                    <div id="autoLapOptions"
+                        style="margin-left: 30px; display: flex; flex-direction: column; gap: 12px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <label for="settingAutoLapSource" style="font-size: 14px; min-width: 80px;">Trigger:</label>
+                            <select id="settingAutoLapSource"
+                                style="padding: 6px 10px; border-radius: 4px; border: 1px solid #d0d7de; font-size: 14px;">
+                                <option value="distance">Distance</option>
+                                <option value="time">Time</option>
+                            </select>
+                        </div>
+                        <div id="autoLapDistanceOption" style="display: flex; align-items: center; gap: 10px;">
+                            <label for="settingAutoLapDistance" style="font-size: 14px; min-width: 80px;">Every:</label>
+                            <select id="settingAutoLapDistance"
+                                style="padding: 6px 10px; border-radius: 4px; border: 1px solid #d0d7de; font-size: 14px;">
+                                <option value="1">1 km</option>
+                                <option value="2">2 km</option>
+                                <option value="5">5 km</option>
+                                <option value="10">10 km</option>
+                            </select>
+                        </div>
+                        <div id="autoLapTimeOption" style="display: none; align-items: center; gap: 10px;">
+                            <label for="settingAutoLapTime" style="font-size: 14px; min-width: 80px;">Every:</label>
+                            <select id="settingAutoLapTime"
+                                style="padding: 6px 10px; border-radius: 4px; border: 1px solid #d0d7de; font-size: 14px;">
+                                <option value="1">1 minute</option>
+                                <option value="5">5 minutes</option>
+                                <option value="10">10 minutes</option>
+                                <option value="15">15 minutes</option>
+                                <option value="30">30 minutes</option>
+                            </select>
+                        </div>
+                        <p style="font-size: 12px; color: #666; margin: 4px 0 0 0;">
+                            Laps will be marked automatically based on the selected interval.
+                        </p>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Auto-Pause Settings Section -->
+            <fieldset class="settings-fieldset"
+                style="border: 1px solid #d0d7de; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+                <legend style="font-weight: 600; padding: 0 8px;">⏸️ Auto-Pause</legend>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <label class="settings-option"
+                        style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                        <input type="checkbox" id="settingAutoPauseEnabled" style="width: 20px; height: 20px;">
+                        <div>
+                            <span style="font-size: 16px;">Enable Auto-Pause</span>
+                            <p style="font-size: 12px; color: #666; margin: 2px 0 0 0;">Automatically pause when
+                                activity drops</p>
+                        </div>
+                    </label>
+                    <div id="autoPauseOptions"
+                        style="margin-left: 30px; display: flex; flex-direction: column; gap: 12px;">
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <label for="settingAutoPauseSource"
+                                style="font-size: 14px; min-width: 80px;">Monitor:</label>
+                            <select id="settingAutoPauseSource"
+                                style="padding: 6px 10px; border-radius: 4px; border: 1px solid #d0d7de; font-size: 14px;">
+                                <option value="speed">Speed</option>
+                                <option value="power">Power</option>
+                                <option value="cadence">Cadence</option>
+                            </select>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <label for="settingAutoPauseThreshold"
+                                style="font-size: 14px; min-width: 80px;">Threshold:</label>
+                            <input type="number" id="settingAutoPauseThreshold" min="0" max="100" step="0.5" value="3"
+                                style="width: 70px; padding: 6px 10px; border-radius: 4px; border: 1px solid #d0d7de; font-size: 14px;">
+                            <span id="autoPauseThresholdUnit" style="font-size: 14px; color: #666;">km/h</span>
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <label for="settingAutoPauseDelay" style="font-size: 14px; min-width: 80px;">Delay:</label>
+                            <input type="number" id="settingAutoPauseDelay" min="1" max="30" step="1" value="3"
+                                style="width: 70px; padding: 6px 10px; border-radius: 4px; border: 1px solid #d0d7de; font-size: 14px;">
+                            <span style="font-size: 14px; color: #666;">seconds</span>
+                        </div>
+                        <p style="font-size: 12px; color: #666; margin: 4px 0 0 0;">
+                            Workout will pause after being below threshold for the delay period.
+                        </p>
+                    </div>
+                </div>
+            </fieldset>
+
+            <!-- Intervals.icu Settings Section -->
+            <fieldset class="settings-fieldset"
+                style="border: 1px solid #d0d7de; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+                <legend style="font-weight: 600; padding: 0 8px;">🔗 Intervals.icu</legend>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <label class="settings-option"
+                        style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                        <input type="checkbox" id="settingIntervalsEnabled" style="width: 20px; height: 20px;">
+                        <div>
+                            <span style="font-size: 16px;">Enable Integration</span>
+                            <p style="font-size: 12px; color: #666; margin: 2px 0 0 0;">Upload workouts to Intervals.icu
+                            </p>
+                        </div>
+                    </label>
+                    <div id="intervalsOptions"
+                        style="display: none; margin-left: 30px; flex-direction: column; gap: 12px;">
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <label for="settingIntervalsApiKey" style="font-size: 14px;">API Key:</label>
+                            <div style="display: flex; gap: 8px;">
+                                <input type="password" id="settingIntervalsApiKey"
+                                    placeholder="Enter API Key from Intervals.icu Settings"
+                                    style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; flex: 1;">
+                                <button id="toggleIntervalsApiKey" type="button" aria-label="Toggle API Key visibility"
+                                    style="background: none; border: 1px solid #ccc; border-radius: 4px; padding: 0 10px; cursor: pointer;">
+                                    👁️
+                                </button>
+                            </div>
+                            <p style="font-size: 12px; color: #666; margin: 2px 0 0 0;">
+                                Find this in Intervals.icu > Settings > Developer
+                            </p>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <label for="settingIntervalsAthleteId" style="font-size: 14px;">Athlete ID:</label>
+                            <input type="text" id="settingIntervalsAthleteId" value="i"
+                                placeholder="Usually 'i' for yourself"
+                                style="padding: 8px; border: 1px solid #ccc; border-radius: 4px; width: 100px;">
+                            <p style="font-size: 12px; color: #666; margin: 2px 0 0 0;">
+                                Use 'i' for your own account, or specific ID.
+                            </p>
+                        </div>
+                        <label class="settings-option"
+                            style="display: flex; align-items: center; gap: 10px; cursor: pointer; margin-top: 4px;">
+                            <input type="checkbox" id="settingIntervalsAutoUpload" style="width: 18px; height: 18px;">
+                            <span style="font-size: 14px;">Auto-upload on save</span>
+                        </label>
+                    </div>
                 </div>
             </fieldset>
 
@@ -480,6 +759,64 @@
                         style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
                         <input type="checkbox" id="settingExportFit" style="width: 20px; height: 20px;">
                         <span style="font-size: 16px;">FIT (Garmin)</span>
+                    </label>
+                </div>
+            </fieldset>
+
+            <!-- Workout Metadata Settings Section -->
+            <fieldset class="settings-fieldset"
+                style="border: 1px solid #d0d7de; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+                <legend style="font-weight: 600; padding: 0 8px;">📝 Post-Workout</legend>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <label class="settings-option"
+                        style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                        <input type="checkbox" id="settingPromptForNotes" checked style="width: 20px; height: 20px;">
+                        <div>
+                            <span style="font-size: 16px;">Prompt for Title & Notes</span>
+                            <p style="font-size: 12px; color: #666; margin: 2px 0 0 0;">Add a title and notes after each
+                                workout</p>
+                        </div>
+                    </label>
+                    <label class="settings-option"
+                        style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                        <input type="checkbox" id="settingPromptForExertion" checked style="width: 20px; height: 20px;">
+                        <div>
+                            <span style="font-size: 16px;">Prompt for Perceived Exertion</span>
+                            <p style="font-size: 12px; color: #666; margin: 2px 0 0 0;">Rate how hard the workout felt
+                                (RPE 1-10)</p>
+                        </div>
+                    </label>
+                </div>
+            </fieldset>
+
+            <!-- Countdown Settings Section -->
+            <fieldset class="settings-fieldset"
+                style="border: 1px solid #d0d7de; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
+                <legend style="font-weight: 600; padding: 0 8px;">⏱️ Countdown Timer</legend>
+                <div style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <label for="settingCountdownDuration"
+                            style="font-size: 16px; min-width: 100px;">Duration:</label>
+                        <select id="settingCountdownDuration"
+                            style="padding: 8px 12px; border-radius: 4px; border: 1px solid #d0d7de; font-size: 14px; flex: 1;">
+                            <option value="0">Disabled</option>
+                            <option value="3">3 seconds</option>
+                            <option value="5">5 seconds</option>
+                            <option value="10">10 seconds</option>
+                        </select>
+                    </div>
+                    <p style="font-size: 12px; color: #666; margin: 0 0 8px 0;">
+                        Show a countdown before the workout starts to give you time to get ready.
+                    </p>
+                    <label class="settings-option"
+                        style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                        <input type="checkbox" id="settingCountdownBeep" checked style="width: 20px; height: 20px;">
+                        <span style="font-size: 16px;">Enable Beep Sound</span>
+                    </label>
+                    <label class="settings-option"
+                        style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                        <input type="checkbox" id="settingCountdownVoice" style="width: 20px; height: 20px;">
+                        <span style="font-size: 16px;">Enable Voice Announcement</span>
                     </label>
                 </div>
             </fieldset>
