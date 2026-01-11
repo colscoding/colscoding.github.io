@@ -15,15 +15,18 @@ if ('serviceWorker' in navigator) {
 
 // Clear all caches
 if ('caches' in window) {
-    caches.keys().then(function (cacheNames) {
-        return Promise.all(
-            cacheNames.map(function (cacheName) {
-                console.log('Deleting cache:', cacheName);
-                return caches.delete(cacheName);
-            })
-        );
-    }).then(function () {
-        console.log('All caches cleared');
-        alert('Service Worker and caches cleared! Please reload the page.');
-    });
+    caches
+        .keys()
+        .then(function (cacheNames) {
+            return Promise.all(
+                cacheNames.map(function (cacheName) {
+                    console.log('Deleting cache:', cacheName);
+                    return caches.delete(cacheName);
+                })
+            );
+        })
+        .then(function () {
+            console.log('All caches cleared');
+            alert('Service Worker and caches cleared! Please reload the page.');
+        });
 }
